@@ -5,56 +5,105 @@
 id=$(echo $[($RANDOM % ($[10000 - 32000] + 1)) + 10000] )
 echo "$id"
 
-yad --plug="$id" --tabnum=1 --form \
---field="<b>Visit The StormOS Site</b>":fbtn "xdg-open https://storm-os.godaddysites.com" \
---field="<b>Or Visit The StormFish OS Site</b>":fbtn "xdg-open https://sourceforge.net/projects/stormfish-os/" \
---field="<b>StormOS ReadMe</b>":fbtn '/usr/local/bin/data/about' \
---field="<b>Step 1. Install Discord</b>":fbtn "konsole -e 'sudo pacman -S discord --noconfirm '" \
---field="<b>Step 2. Visit us and Join The StormOS/StormFishOS Discord</b>":fbtn "xdg-open https://discord.gg/36JkjDVUP9" \
---field="Reserved:BTN" "eom" &> /tmp/data1 &
 
-yad --plug="$id" --tabnum=2 --form \
+yad --plug="$id" --tabnum=1 --columns=2 --form \
 --field="<b>Step 1. Refresh Mirrors</b>":FBTN "konsole -e 'sudo reflector --verbose -l 20 --sort rate --save /etc/pacman.d/mirrorlist'" \
 --field="<b>Step 2. System Updates</b>":FBTN "konsole  -e 'sudo pacman -Syyu --noconfirm'" \
---field="<b>Step 3. Aur Updates</b>":FBTN "konsole -e 'yay -Syyu --noconfirm'" \
---field="<b>Step 4. (Optional) Arch Keyring Updater</b>":FBTN "konsole -e 'sudo pacman -S archlinux-keyring --noconfirm'" \
---field="<b>Step 5. Install Teamviewer</b>":FBTN "konsole -e 'sudo pacman -S teamviewer --noconfirm'" \
---field="<b>Step 6. Activate Teamviewer daemon for remote access</b>":FBTN "konsole -e ' teamviewer --daemon start'" \
---field="<b>Step 7. Launch Teamviewer for Remote Support</b>":FBTN "konsole -e '/opt/teamviewer/tv_bin/script/teamviewer'" \
---field="<b>Step 8. Install Warpinator to share between computers in your local network</b>":FBTN "konsole -e 'sudo pacman -S warpinator --noconfirm'" \
---field="<b>Step 9. Launch Warpinator</b>":FBTN "konsole -e  'warpinator'" \
---field="<b>Step 10. Incase warpinator leaves a terminal open click this. </b>":FBTN "konsole -e  'killall warpinator'" \
---field="Reserved:BTN" "eom" &> /tmp/data2 &
+--field="<b>Step 3. (Optional) Aur Updates</b>":FBTN "konsole -e 'yay -Syyu --noconfirm'" \
+--field="<b>Step 4. (Optional) Arch Keyring Updater</b>":FBTN "konsole -e 'upkeyring'" \
+--field="<b>Step 4a. (Optional) Renew Arch Keyring </b>":FBTN "konsole -e 'upsystem'" \
+--field="<b>Step 5. Install Teamviewer</b>":FBTN "konsole -e 'tinstall'" \
+--field="<b>Step 6. Install Lshw</b>":FBTN "konsole -e  'sudo pacman -S lshw --noconfirm'" \
+--field="<b>Step 7. Install i2c-tools for decode-dimms</b>":FBTN "konsole -e  'sudo pacman -S i2c-tools --noconfirm'" \
+--field="<b>Step 8. Install Nvidia drivers (dkms) after that, (Reboot)</b>":FBTN "konsole -e  'sudo pacman -S nvidia-dkms lib32-nvidia-utils lib32-opencl-nvidia lib32-primus_vk lib32-libvdpau cuda-tools cuda opencl-nvidia primus_vk --noconfirm'" \
+--field="<b>Step 9. Install Nvidia-390xx drivers (dkms) after that (Reboot)</b>:FBTN "konsole -e 'sudo pacman -S nvidia-390xx-dkms nvidia-390xx-utils opencl-nvidia-390xx --noconfirm"'\
+--field="<b>Laptop Section:</b>":btn "" \
+--field="<b>Step 11. (FOR OPTIMUS/MUX LAPTOPS ONLY!!)  (Warning, automated REBOOT)</b>":FBTN "konsole -e  'sudo pacman -S supergfxctl --no-confirm; sudo systemctl enable --now supergfxd; sudo reboot'" \
+--field="<b>Hardware and Memory Section:</b>":btn "" \
+--field="<b>Memory Reader (Works on most PC's )</b>":FBTN "konsole -H -x 'decode-dimms'" \
+--field="<b>Memory Reader 2 (Works on some PC's also)</b>":FBTN "konsole -H -e 'sudo dmidecode --type memory'" \
+--field="<b>Lshw for System Info and Decode-dimms for Memreader1.txt to Txt</b>":FBTN "konsole -e 'lshwinfo'" \
+--field="<b>Memory Reader 2 Memory Info to Memreader2.txt</b>":FBTN "konsole -e 'memreader2'" \
+--field="<b>Blank your Screen/s select here </b>":FBTN "konsole -e 'blankscreen'" \
+--field="<b>Block Detail Info</b>":fbtn "konsole -H -x 'lsblk'" \
+--field="<b>Reserved</b>":btn "" \
+--field="<b>Reserved</b>":btn "" \
+--field="<b>Reserved</b>":btn "" &> /tmp/data1 &
 
 
-
-yad --plug="$id" --tabnum=3 --form \
+yad --plug="$id" --tabnum=2 --columns=2 --form \
+--field="<b>Game Related Utilities:</b>":btn "" \
 --field="<b>Install Steam Native</b>":fbtn "konsole -e 'sudo pacman -S --noconfirm steam-native-runtime gamemode'" \
 --field="<b>Install Heroic Launcher</b>":fbtn "konsole -e 'yay -S --noconfirm heroic-games-launcher-bin gamemode'" \
 --field="<b>Install Lutris Launcher</b>":fbtn "konsole -e 'sudo pacman -S --noconfirm lutris gamemode'" \
 --field="<b>Install ProtonGE Updater</b>":fbtn "konsole -e 'yay -S --noconfirm proton-community-updater'" \
 --field="<b>Install Mangohud/Goverlay</b>":fbtn "konsole -e 'yay -S --noconfirm mangohud goverlay-bin'" \
 --field="<b>Install Bottles Launcher</b>":fbtn "konsole -e 'yay -S --noconfirm bottles'" \
---field="Reserved:BTN" "eom" &> /tmp/data3 &
+--field="<b>System Tools/Utilities:</b>":btn "" \
+--field="<b>Install Warpinator</b>":FBTN "konsole -e 'sudo pacman -S warpinator --noconfirm'" \
+--field="<b>Install Gnome-Calculator</b>":FBTN "konsole -e 'sudo pacman -S gnome-calculator --noconfirm'" \
+--field="<b>Install Flameshot</b>":FBTN "konsole -e 'sudo pacman -S flameshot --noconfirm'" \
+--field="<b>Install Transmission-Gtk</b>":FBTN "konsole -e 'sudo pacman -S transmission-gtk  --noconfirm'" \
+--field="<b>Install Thunderbird</b>":FBTN "konsole -e 'sudo pacman -S thunderbird  --noconfirm'" \
+--field="<b>Install Xed (Alt) Text Editor</b>":FBTN "konsole -e 'sudo pacman -S xed  --noconfirm'" \
+--field="<b>Install Only Office</b>":FBTN "konsole -e 'yay -S onlyoffice-bin  --noconfirm'" \
+--field="<b>Install Media Stream Installer </b>":FBTN "konsole -e 'minstaller'" \
+--field="<b>Install Minimize to Tray (Auto Reboot)</b>":FBTN "konsole -e 'trayinjector'" \
+--field="<b>Program Launchers:</b>":btn "" \
+--field="<b>launch Replace all File/Directory Menu</b>":FBTN "konsole -e 'replaceall'" \
+--field="<b>launch Download Manager Wgetm</b>":FBTN "wgetm" \
+--field="<b>launch Media Stream Player</b>":FBTN "mstreamplayer" \
+--field="<b>Create Launcher for Desktop/Panel</b>":FBTN "sudo exo-desktop-item-edit --create-new /usr/share/applications" \
+--field="<b>launch Duckduckgo Search Engine</b>":FBTN "dsearch" \
+--field="<b>launch Open Website Link</b>":FBTN "openlink" \
+--field="<b>Reserved</b>":btn "" \
+--field="<b>Reserved</b>":btn "" &> /tmp/data2 &
 
 
 
-yad --plug="$id" --tabnum=4 --form \
+yad --plug="$id" --tabnum=3 --columns=2 --form \
 --field="<b>Step 1.Enable Cups/Printer</b>":fbtn "konsole -e 'systemctl enable --now cups'" \
 --field="<b>Step 2. Cups/Printer Web Interface</b>":fbtn "xdg-open http://127.0.0.1:631" \
---field="Reserved":btn "eom" &> /tmp/data4 &
+--field="<b>(Optional) Epson Drivers</b>":fbtn "konsole -e 'epsoninstaller'" \
+--field="<b>HP Drivers (Preinstalled)</b>":btn "eom" &> /tmp/data3 &
 
 
-yad --plug="$id" --tabnum=5 --form \
+yad --plug="$id" --tabnum=4 --columns=2 --form \
+--field="<b>Step 1. Install Discord</b>":fbtn "konsole -e 'sudo pacman -S discord --noconfirm '" \
+--field="<b>Step 2. Visit us and Join us in The StormOS Discord Channel</b>":fbtn "xdg-open https://discord.gg/36JkjDVUP9" \
 --field="<b>Distrowatch</b>":fbtn "xdg-open https://distrowatch.com" \
+--field="<b>Merchandise Store</b>":fbtn "xdg-open https://ebuzz-central.creator-spring.com/" \
 --field="<b>Gofund.me Page</b>":fbtn "xdg-open https://gofund.me/d954872d" \
---field="<b>Patreon Page</b>":fbtn "xdg-open https://patreon.com/benfitzpatrick" &> /tmp/data5 &
+--field="<b>Patreon Page</b>":fbtn "xdg-open https://patreon.com/benfitzpatrick" \
+--field="<b>Visit The StormOS Site (Soon to Change Hosts)</b>":fbtn "WIP!!" \
+--field="<b>Visit The StormOS Sourceforge Site for Direct Downloads and Info on StormOS</b>":fbtn "xdg-open https://sourceforge.net/projects/hackman-linux/files/" \
+--field="<b>Or Visit The StormFish OS Site</b>":fbtn "xdg-open https://sourceforge.net/projects/stormfish-os/" \
+--field="<b>StormOS ReadMe</b>":fbtn '/usr/local/bin/data/about' \
+--field="<b>Reserved</b>":btn "" \
+--field="Reserved:BTN" "eom" &> /tmp/data4 &
 
 
-yad --notebook --key="$id" --center --tab-pos=top --width=480 --height=175 --tab "<b>(1).Welcome</b>" --tab="<b>(2).Maintenance and Updates and Support</b>" --tab="<b>(3).Game Program Installers</b>" --tab="<b>(4). Cups/Printer Installation</b>"  --tab="<b>(5).Donations</b>"  --image=/usr/share/icons/scalable/apps/stormos.png \
---title="Storm OS Utilities Program v1.0.7" \
---text="<b>Greetings $USER Use this tool to Maintain and Upgrade your Storm OS</b>" \
+yad --plug="$id" --tabnum=5 --columns=2 --form \
+--field="<b>StormOS Arch Commands</b>":fbtn '/usr/local/bin/data/commands' \
+--field="<b>Visit The Arch Wiki</b>":fbtn "xdg-open https://wiki.archlinux.org/" \
+--field="<b>Visit The Arch Website</b>":fbtn "xdg-open https://archlinux.org/" \
+--field="<b>Explanation of Arch Commands</b>":fbtn "xdg-open https://www.geeksforgeeks.org/pacman-command-in-arch-linux/#:~:text=Pacman%20is%20a%20package%20manager,a%20text%2Dbased%20package%20database." \
+--field="<b>Visit 3rd Party Software for Arch AUR Website</b>":fbtn "xdg-open https://aur.archlinux.org/" \
+--field="<b>Beginner Video Tutorial on Pacman</b>":fbtn "xdg-open https://www.youtube.com/watch?v=TQaHfQrwnXo" \
+--field="<b>Novice/Advanced Video Tutorial on Pacman</b>":fbtn "xdg-open https://www.youtube.com/watch?v=-dEuXTMzRKs" \
+--field="<b>Reserved</b>:BTN" "eom" &> /tmp/data5 &
+
+yad --notebook --key="$id" --center --tab-pos=bottom  --width=480 --height=175 --tab="<b>(1).Maintenance/Updates/Support</b>" --tab="<b>(2).Game/Utilities/Scripts</b>" --tab="<b>(3).Cups/Printer Drivers</b>"  --tab="<b>(4).About Us/Donations/Merchandise</b>"  --tab="<b>(5).Arch University</b>" --image=/usr/share/icons/scalable/apps/stormos.png \
+--title="Storm OS Utilities Program v4.0.0.1" \
+--text="<b>Greetings $USER Use this Utility tool to Maintain and Upgrade your Storm OS</b>" \
 --justify=center \
+--button="System Info by Lshw":"konsole -H -x sudo lshw -short" \
+--button="System Resources via Top":"konsole -H -x top" \
+--button="Update Utility Program":"konsole -e 'utilityup'" \
+--button="Add/Remove Software":"pamac-manager %U" \
+--button="Add Utility Tool to Tray":"alltray -H sysconfig" \
+
+
 
 #StormOS." --image=/usr/share/icons/scalable/apps/stormos.png"  \
 
